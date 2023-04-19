@@ -8,7 +8,7 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { chain } = useNetwork();
-  const { switchNetwork, chains } = useSwitchNetwork();
+  const { switchNetwork } = useSwitchNetwork();
 
   return <Box height="100vh" pt={["72px", "72px", 0]}>
     <Box pos="fixed" top={0} left={0} width="100%" display="flex" p={4} justifyContent="flex-end">
