@@ -1,16 +1,15 @@
 import { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider } from '@chakra-ui/react'
-import { configureChains, createClient, goerli, WagmiConfig } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
+import { configureChains, createClient, mainnet, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 
 const client = new QueryClient();
 
 const { provider, webSocketProvider } = configureChains(
-  [goerli],
-  [publicProvider()],
+  [mainnet],
+  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY as string })],
 );
 
 const connector = new MetaMaskConnector();

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Address, useAccount, useContractRead } from "wagmi";
-import { parseFixed } from '@ethersproject/bignumber';
+import { Address, erc721ABI, useAccount, useContractRead } from "wagmi";
 import { Text } from "@chakra-ui/react";
+import { BigNumber } from "ethers";
 
 interface Props {
   assetAddress?: Address;
@@ -14,33 +14,13 @@ export default function OwnerIndicator({ assetAddress, tokenId }: Props) {
 
   useContractRead({
     address: assetAddress,
-    abi: [
-      {
-        "inputs":
-          [
-            {
-              "internalType": "uint256",
-              "name": "tokenId",
-              "type": "uint256"
-            }
-          ],
-        "name": "ownerOf",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      }
-    ],
+    abi: erc721ABI,
     functionName: "ownerOf",
-    args: [parseFixed(tokenId ?? '0', 18)],
+    args: [BigNumber.from(tokenId ?? '0')],
     enabled: !!assetAddress && !!tokenId,
     onSuccess(data) {
       if (data) {
+        console.log(data);
         setIsOwner(data === address);
       }
     },
